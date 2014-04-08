@@ -1,0 +1,20 @@
+// Gameboard
+	// BoardPiece (made of many)
+		// Property
+			// Housing
+				// Color
+			// RailRoad
+			// Utilities
+		// Event
+			// Go, Free Parking, Go to Jail, Jail - Just visiting, Lux Tax, Chance, Income, CommChest
+	// Players 2 - 8
+		// Tokens
+			// Simple class of image/names
+	// Banker
+		// Play Money
+		// Title Deed Cards
+		// Houses 32
+		// Hotels 12
+	// Dice rolls 3?
+	// Chance Cards and Community Chest Cards
+		// Use Inheritance
