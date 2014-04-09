@@ -1,34 +1,75 @@
-import java.util.HashMap;
+import java.util.*;
 import java.awt.Color;
 
 public class GameBoard {
 
-	private static HashMap < String, BoardPiece > boardPieces;
+	private List < BoardPiece > boardPieces;
+	
+	private final static Color PURPLE = new Color (102, 0 , 102);
 
 	GameBoard(){
-	
+		boardPieces = new ArrayList <BoardPiece> (40);
+		
+		boardPieces.add(new Event("Go"));
+		boardPieces.add(new Housing("Mediterranean Avenue", 60.00, PURPLE));		
+		boardPieces.add(new Event("Community Chest"));
+		boardPieces.add(new Housing("Baltic Avenue", 60.00, PURPLE));
+		boardPieces.add(new Event("Income Tax"));
+		boardPieces.add(new RailRoad("Reading Railroad", 200.00));
+		boardPieces.add(new Housing("Oriental Avenue", 100.00, Color.CYAN));
+		boardPieces.add(new Event("Chance"));
+		boardPieces.add(new Housing("Vermont Avenue", 100.00, Color.CYAN));
+		boardPieces.add(new Housing("Connecticut Avenue", 120.00, Color.CYAN));
+		
+		boardPieces.add(new Event("In Jail/Just Visiting"));
+		boardPieces.add(new Housing("St.Charles Place", 140.00, Color.PINK));
+		boardPieces.add(new Utilities("Electric Company", 150.00));
+		boardPieces.add(new Housing("States Avenue", 140.00, Color.PINK));
+		boardPieces.add(new Housing("Virginia Avenue", 160.00, Color.PINK));
+		boardPieces.add(new RailRoad("Pennsylvania Railroad", 200.00));
+		boardPieces.add(new Housing("St.James Place", 180.00, Color.ORANGE));
+		boardPieces.add(new Event("Community Chest"));		
+		boardPieces.add(new Housing("Tennessee Avenue", 180.00, Color.ORANGE));
+		boardPieces.add(new Housing("New York Avenue", 200.00, Color.ORANGE));
+
+		boardPieces.add(new Event("Free Parking"));
+		boardPieces.add(new Housing("Kentucky Avenue", 220.00, Color.RED));
+		boardPieces.add(new Event("Chance"));
+		boardPieces.add(new Housing("Indiana Avenue", 220.00, Color.RED));
+		boardPieces.add(new Housing("Illinois Avenue", 240.00, Color.RED));
+		boardPieces.add(new RailRoad("B&O Railroad", 200.00));
+		boardPieces.add(new Housing("Atlantic Avenue", 260.00, Color.YELLOW));
+		boardPieces.add(new Housing("Ventnor Avenue", 260.00, Color.YELLOW));
+		boardPieces.add(new Utilities("Water Works", 150.00));
+		boardPieces.add(new Housing("Marvin Gardens", 280.00, Color.YELLOW));
+		
+		boardPieces.add(new Event("Go To Jail"));
+		boardPieces.add(new Housing("Pacific Avenue", 300.00, Color.GREEN));
+		boardPieces.add(new Housing("North Carolina Avenue", 300.00, Color.GREEN));
+		boardPieces.add(new Event("Community Chest"));		
+		boardPieces.add(new Housing("Pennsylvania Avenue", 320.00, Color.GREEN));
+		boardPieces.add(new RailRoad("Short Line", 200.00));
+		boardPieces.add(new Event("Chance"));
+		boardPieces.add(new Housing("Park Place", 350.00, Color.BLUE));
+		boardPieces.add(new Event("Luxury Tax"));		
+		boardPieces.add(new Housing("Boardwalk", 400.00, Color.BLUE));
+
+		for (int i = 0; i < boardPieces.size(); i++){
+			System.out.println(boardPieces.get(i));
+			if ( (i+1) % 10 == 0 ){
+				System.out.println();
+			}
+		}
+		
 	}
 
 	
 	public static void main (String args []){
-		Housing house = new Housing("Test1", 12.99, Color.RED);
-		RailRoad r1 = new RailRoad("Pennsylvania RailRoad", 100.97);
-		Utilities u1 = new Utilities("WaterWorks", 25.23);
-		Event e1 = new Event ("Chance Card!");
-		System.out.println(house.getName() + " :: $" + house.getPrice() + " :: " + house.getColor());
-		System.out.println(r1.getName() + " :: $" + r1.getPrice());
-		System.out.println(u1.getName() + " :: $" + u1.getPrice());
-		System.out.println(e1.getName()+ "\n\n\n");
+		GameBoard gb = new GameBoard();
 		
-		BoardPiece boardpieces[] = new BoardPiece [4];
-		boardpieces[0] = house;
-		boardpieces[1] = r1;
-		boardpieces[2] = u1;
-		boardpieces[3] = e1;
-		
-		for(int i = 0; i < boardpieces.length; i++){
-			System.out.println(boardpieces[i].getName());
-		}
+		// for (BoardPiece b : gb.boardPieces){
+			// System.out.println(gb.boardPieces.getName());
+		// }
 	}
 }
 
@@ -40,6 +81,11 @@ abstract class BoardPiece {
 	}
 	
 	public String getName(){
+		return name;
+	}
+	
+	@Override
+	public String toString(){
 		return name;
 	}
 }
