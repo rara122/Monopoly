@@ -1,0 +1,15 @@
+You need to finish PaintComponent to resize correctly and match the bounds.
+
+
+Also start working on player heirarchy.
+
+
+Comment:
+
+Added some major UI and paintComponent(). Still needs the resizing to be fixed.
+Added Players.java, Bank.java.
+Bank.java still needs to be implemented.
+Players.java is being built up and has accessors, takeTurn(), rollDice(), getStatus(), withdraw(), and deposit(). Sort of started implementing $ system, aka Only Go Collect 200.
+In GameBoard.java added private String htmlName to all BoardPieces and it's own constructor also. GameBoard.java also added loadBoardData() and loadBoardPieces() for initialization. I also added accessors getBoardPieces() for the List and getBoardPiece(int position) for specific BoardPiece panels.
+Finally, moved all of the files to one package AssignmentX;
+
