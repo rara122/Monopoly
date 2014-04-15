@@ -1,5 +1,7 @@
 package AssignmentX;
 import java.util.Random;
+import javax.swing.*;
+import java.awt.*;
 
 class Player {
 	private double balance;
@@ -9,7 +11,8 @@ class Player {
 	public Player(){
 		balance = 1500.00;
 		position = 0;
-		rando = new Random(System.currentTimeMillis());
+		// rando = new Random(System.currentTimeMillis());
+		rando = new Random();
 	}
 	
 		// Returns Status
@@ -98,4 +101,33 @@ class Player {
 		// }
 		
 	// }
+}
+
+
+class PlayersPanel extends JPanel{
+	
+	// private JPanel[] panels;
+	private JLabel nameLabel;
+	private JLabel balanceLabel;
+	private Player[] players;
+	private JPanel[] panels;
+	
+	public PlayersPanel(Player[] p){
+		setLayout(new GridLayout(0, 1));
+		players = p;
+
+		panels = new JPanel [players.length];
+		for(int i = 0; i < players.length; i++){
+			panels[i] = new JPanel(new BorderLayout());
+			nameLabel = new JLabel ("Player " + (i+1));
+			balanceLabel = new JLabel ("$" + players[i].getBalance());
+
+			panels[i].add(nameLabel, BorderLayout.NORTH);
+			panels[i].add(balanceLabel, BorderLayout.CENTER);
+			panels[i].setBackground(Color.WHITE);
+
+			add(panels[i]);
+		}		
+		// System.out.println(players.length);
+	}
 }

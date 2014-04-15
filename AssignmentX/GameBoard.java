@@ -64,7 +64,7 @@ public class GameBoard extends JPanel{
 		boardPieces.add(new Housing("States Avenue", 140.00, Color.PINK));
 		boardPieces.add(new Housing("Virginia Avenue", 160.00, Color.PINK));
 		boardPieces.add(new RailRoad("Pennsylvania Avenue", "<html> <p style='text-align:center;'>Pennsylvania<br/>Railroad</p></html>", 200.00));
-		boardPieces.add(new Housing("St.James Place", 180.00, Color.ORANGE));
+		boardPieces.add(new Housing("St. James Place", 180.00, Color.ORANGE));
 		boardPieces.add(new Event("Community Chest"));		
 		boardPieces.add(new Housing("Tennessee Avenue", 180.00, Color.ORANGE));
 		boardPieces.add(new Housing("New York Avenue", 200.00, Color.ORANGE));
@@ -102,11 +102,24 @@ public class GameBoard extends JPanel{
 		for (int i = 0; i < boardPieces.size(); i++){
 			JPanel p = new JPanel (new BorderLayout());
 			JLabel nameLabel = new JLabel("" + boardPieces.get(i).getHtmlName());
+			Color textColor;
+
+			if(boardPieces.get(i).getColor() == Color.BLUE || boardPieces.get(i).getColor() == PURPLE){
+				textColor = Color.WHITE;
+			}
+			else{
+				textColor = Color.BLACK;
+			}			
 			nameLabel.setHorizontalAlignment(JLabel.CENTER);
-			nameLabel.setVerticalAlignment(JLabel.CENTER);
-			nameLabel.setForeground(boardPieces.get(i).getColor());
-			// nameLabel.setBackground(boardPieces.get(i).getColor());
-			// nameLabel.setOpaque(true);
+			nameLabel.setVerticalAlignment(JLabel.CENTER);			
+			nameLabel.setForeground(textColor);
+			nameLabel.setBackground(boardPieces.get(i).getColor());
+			nameLabel.setOpaque(true);
+			
+			if(nameLabel.getBackground() != Color.WHITE){
+				nameLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+			}
+			
 			if(boardPieces.get(i) instanceof Property){
 				Property prop = (Property) boardPieces.get(i);
 				JLabel priceLabel = new JLabel("$" + prop.getPrice());
@@ -117,9 +130,7 @@ public class GameBoard extends JPanel{
 			
 			p.add(nameLabel, BorderLayout.NORTH);
 			p.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			if (i % 2 == 0){
-				p.setBackground(Color.WHITE);
-			}
+			p.setBackground(Color.WHITE);
 			boardPiecePanels.add(i, p);
 		}
 		
@@ -134,9 +145,9 @@ public class GameBoard extends JPanel{
 		
 		southPanel.setComponentOrientation( ComponentOrientation.RIGHT_TO_LEFT );
 		
-		Dimension horiSize = new Dimension(90, 120);
-		Dimension vertSize = new Dimension(120, 60);
-		Dimension cornerSize = new Dimension(120, 120);
+		Dimension horiSize = new Dimension(90, 100);
+		Dimension vertSize = new Dimension(120, 67);
+		Dimension cornerSize = new Dimension(120, 100);
 				
 		for (int i = 0; i < boardPiecePanels.size(); i++){
 				// SOUTH
@@ -195,23 +206,18 @@ public class GameBoard extends JPanel{
 		Graphics2D g2 = (Graphics2D) g;
 
 		double subLength, subWidth;
-		int top, left, bottom, right;
-		// subLength = (getHeight() / 13) + (getHeight() % 13);
-		// subWidth = (getWidth() /13) + (getWidth() % 13);
 		Dimension panelSize = getSize();
 		subLength = (panelSize.getHeight() / 13);
 		subWidth = (panelSize.getWidth() /13);
-		// top = bottom = subLength;
-		// right = left = subWidth;
 		
 		
-		Dimension horiSize = new Dimension((int) subLength, (int) subWidth*2);
-		Dimension vertSize = new Dimension((int) subLength*2, (int) subWidth);
-		Dimension cornerSize = new Dimension((int) subLength*2, (int) subWidth*2);
+		Dimension horiSize = new Dimension((int) subWidth, (int) subLength*2);
+		Dimension vertSize = new Dimension((int) subWidth*2, (int) subLength);
+		Dimension cornerSize = new Dimension((int) subWidth*2, (int) subLength*2);
 		
 		// // Dimension horiSize = new Dimension(90, 120);
-		// // Dimension vertSize = new Dimension(120, 60);
-		// // Dimension cornerSize = new Dimension(120, 120);
+		// Dimension vertSize = new Dimension(120, 60);
+		// Dimension cornerSize = new Dimension(120, 120);
 		// System.out.println("Width: " + horiSize.getWidth() + ", Height: " + horiSize.getHeight());
 		// System.out.println("subWidth: " + subWidth + ", subheight: " + subLength + "\n");
 				
@@ -221,25 +227,17 @@ public class GameBoard extends JPanel{
 				boardPiecePanels.get(i).setPreferredSize(horiSize);
 				boardPiecePanels.get(i).setMinimumSize(horiSize);
 				boardPiecePanels.get(i).setMaximumSize(horiSize);
-				// boardPiecePanels.get(i).setPreferredSize(new Dimension (top, right*2));
-				// boardPiecePanels.get(i).setMinimumSize(new Dimension (top, right*2));
-				// boardPiecePanels.get(i).setMaximumSize(new Dimension (top, right*2));
 				if(i == 0 | i == 10){
 					boardPiecePanels.get(i).setPreferredSize(cornerSize);
 					boardPiecePanels.get(i).setMinimumSize(cornerSize);
 					boardPiecePanels.get(i).setMaximumSize(cornerSize);
-					// boardPiecePanels.get(i).setPreferredSize(new Dimension (top*2, right*2));
-					// boardPiecePanels.get(i).setMinimumSize(new Dimension (top*2, right*2));
-					// boardPiecePanels.get(i).setMaximumSize(new Dimension (top*2, right*2));
 				}
-				// southPanel.add(boardPiecePanels.get(i));
 			}
 				// WEST
 			else if(i >= 11 && i <= 19){
 				boardPiecePanels.get(i).setPreferredSize(vertSize);
 				boardPiecePanels.get(i).setMinimumSize(vertSize);
 				boardPiecePanels.get(i).setMaximumSize(vertSize);
-				// westPanel.add(boardPiecePanels.get(i), 0);
 			}
 				// NORTH
 			else if(i >=20 && i <= 30){
@@ -251,17 +249,12 @@ public class GameBoard extends JPanel{
 					boardPiecePanels.get(i).setMinimumSize(cornerSize);
 					boardPiecePanels.get(i).setMaximumSize(cornerSize);
 				}
-				// northPanel.add(boardPiecePanels.get(i));
-		// System.out.println("Width: " + horiSize.getWidth() + ", Height: " + horiSize.getHeight());
-		// System.out.println("CornerWidth: " + cornerSize.getWidth() + ", cornHeight: " + cornerSize.getHeight() + "\n");
-
 			}
 				// EAST
 			else if(i >= 31 && i <= 39){
 				boardPiecePanels.get(i).setPreferredSize(vertSize);
 				boardPiecePanels.get(i).setMinimumSize(vertSize);
 				boardPiecePanels.get(i).setMaximumSize(vertSize);
-				// eastPanel.add(boardPiecePanels.get(i));
 			}
 			else{
 				System.err.println("boardPiecesPanels Index bound exceeded!");
@@ -285,10 +278,11 @@ public class GameBoard extends JPanel{
 abstract class BoardPiece extends JPanel{
 	private String name;
 	private String htmlName;
-	protected Color color = Color.BLACK;
+	protected Color color = Color.WHITE;
 	
 	BoardPiece(String n){
-		name = htmlName = n;	
+		name = n;
+		htmlName = "<html><p style='text-align:center;'>" + n + "<br/>&nbsp; </p></html>";
 	}
 	BoardPiece(String n, String htmlN){
 		name = n;

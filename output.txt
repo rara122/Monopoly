@@ -1,107 +1,98 @@
-Rolled: 6, 5
-Pos: 11, $1500.0, on St.Charles Place
+Rolled: 5, 4
+Pos: 9, $1500.0, on Connecticut Avenue
 
 
-Rolled: 4, 4
-###################
-     DOUBLES!
-###################
-Pos: 19, $1500.0, on New York Avenue
-
-
-Rolled: 4, 4
-###################
-     DOUBLES!
-###################
-Pos: 27, $1500.0, on Ventor Avenue
-
-
-Rolled: 2, 5
-Pos: 34, $1500.0, on Pennsylvania Avenue
-
-
-Rolled: 2, 5
-$$$$$$$$$$$$$$$$$$$$$$$
-Passed Go, Collect $200
-$$$$$$$$$$$$$$$$$$$$$$$
-Pos: 1, $1700.0, on Mediterranean Avenue
-
-
-Rolled: 3, 3
-###################
-     DOUBLES!
-###################
-Pos: 7, $1700.0, on Chance
-
-
-Rolled: 6, 1
-Pos: 14, $1700.0, on Virginia Avenue
-
-
-Rolled: 2, 4
-Pos: 20, $1700.0, on Free Parking
-
-
-Rolled: 3, 2
-Pos: 25, $1700.0, on B&O Railroad
-
-
-Rolled: 5, 2
-Pos: 32, $1700.0, on North Carolina Avenue
-
-
-Rolled: 4, 5
-$$$$$$$$$$$$$$$$$$$$$$$
-Passed Go, Collect $200
-$$$$$$$$$$$$$$$$$$$$$$$
-Pos: 1, $1900.0, on Mediterranean Avenue
-
-
-Rolled: 3, 1
-Pos: 5, $1900.0, on Reading Railroad
-
-
-Rolled: 3, 3
-###################
-     DOUBLES!
-###################
-Pos: 11, $1900.0, on St.Charles Place
+Rolled: 2, 6
+Pos: 17, $1500.0, on Community Chest
 
 
 Rolled: 3, 5
-Pos: 19, $1900.0, on New York Avenue
+Pos: 25, $1500.0, on B&O Railroad
 
 
-Rolled: 5, 4
-Pos: 28, $1900.0, on Water Works
+Rolled: 6, 4
+Pos: 35, $1500.0, on Short Line
 
 
-Rolled: 3, 2
-Pos: 33, $1900.0, on Community Chest
-
-
-Rolled: 4, 6
+Rolled: 4, 4
+###################
+     DOUBLES!
+###################
 $$$$$$$$$$$$$$$$$$$$$$$
 Passed Go, Collect $200
 $$$$$$$$$$$$$$$$$$$$$$$
-Pos: 3, $2100.0, on Baltic Avenue
+Pos: 3, $1700.0, on Baltic Avenue
+
+
+Rolled: 4, 3
+Pos: 10, $1700.0, on In Jail/ Just Visiting
+
+
+Rolled: 4, 1
+Pos: 15, $1700.0, on Pennsylvania Avenue
+
+
+Rolled: 4, 2
+Pos: 21, $1700.0, on Kentucky Avenue
+
+
+Rolled: 5, 3
+Pos: 29, $1700.0, on Marvin Gardens
+
+
+Rolled: 2, 2
+###################
+     DOUBLES!
+###################
+Pos: 33, $1700.0, on Community Chest
+
+
+Rolled: 3, 1
+Pos: 37, $1700.0, on Park Place
+
+
+Rolled: 3, 4
+$$$$$$$$$$$$$$$$$$$$$$$
+Passed Go, Collect $200
+$$$$$$$$$$$$$$$$$$$$$$$
+Pos: 4, $1900.0, on Income Tax
+
+
+Rolled: 1, 6
+Pos: 11, $1900.0, on St.Charles Place
+
+
+Rolled: 4, 3
+Pos: 18, $1900.0, on Tennessee Avenue
+
+
+Rolled: 4, 1
+Pos: 23, $1900.0, on Indiana Avenue
+
+
+Rolled: 1, 2
+Pos: 26, $1900.0, on Atlantic Avenue
 
 
 Rolled: 4, 4
 ###################
      DOUBLES!
 ###################
-Pos: 11, $2100.0, on St.Charles Place
+Pos: 34, $1900.0, on Pennsylvania Avenue
 
 
-Rolled: 6, 3
-Pos: 20, $2100.0, on Free Parking
+Rolled: 3, 4
+$$$$$$$$$$$$$$$$$$$$$$$
+Passed Go, Collect $200
+$$$$$$$$$$$$$$$$$$$$$$$
+Pos: 1, $2100.0, on Mediterranean Avenue
 
 
-Rolled: 4, 4
-###################
-     DOUBLES!
-###################
-Pos: 28, $2100.0, on Water Works
+Rolled: 3, 5
+Pos: 9, $2100.0, on Connecticut Avenue
+
+
+Rolled: 2, 5
+Pos: 16, $2100.0, on St.James Place
 
 
