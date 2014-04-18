@@ -1,36 +1,51 @@
 package AssignmentX;
 import java.util.*;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 
 public class GameBoard extends JPanel{
 
+	private JPanel mainPanel;
+	private JPanel sidePanel;
 	private java.util.List < BoardPiece > boardPieces;
 	private java.util.List < JPanel > boardPiecePanels;
-	private JPanel panel;
+	private JPanel boardPiecePanelCenters [];
+	private Player [] playerList;
+	private JLabel [] playerTokens;
+	private int numPlayers;
+	private int currPlayer = 0;
+	private int newPanel, prevPanel;
+
 	
 	private final static Color PURPLE = new Color (102, 0 , 102);
 
+	
+	////////////////////////////////////////////////////
+	// ***************  Constructors  *************** //
+	////////////////////////////////////////////////////	
+	
 	public GameBoard(){
+		this(2);	
+	}
+	
+	public GameBoard(int numP){
+		numPlayers = numP;
 		
 			// UI Initialization
-		setLayout(new BorderLayout());
-		setBackground(Color.WHITE);
+		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		mainPanel = new JPanel(new BorderLayout());
+		sidePanel = new JPanel(new GridLayout(0, 1));
 
 		loadBoardData();
 		loadBoardPiecesUI();		
-		
-		
-			// // Prints Names of boardPieces
-		// for (int i = 0; i < boardPieces.size(); i++){
-			// // System.out.println(boardPieces.get(i) + ", Color = " + boardPieces.get(i).getColor());
-			// System.out.println(boardPieces.get(i));
-			// if ( (i+1) % 10 == 0 ){
-				// System.out.println();
-			// }
-		// }
 	}
+	
+	
+	//////////////////////////////////////////////////////
+	// *************  Accessor Functions  ************* //
+	//////////////////////////////////////////////////////
 	
 	public java.util.List < BoardPiece > getBoardPieces(){
 		return boardPieces;
@@ -40,9 +55,47 @@ public class GameBoard extends JPanel{
 		return boardPieces.get(position);
 	}
 	
+	
+	//////////////////////////////////////////////////////
+	// ***************  Other Functions  ************** //
+	//////////////////////////////////////////////////////
+	
 		// Initialize boardPieces with data
 	private void loadBoardData() {
 	
+		/* ~~~~~~~~~~~~~~~~~~~~~~~~ //
+		//     Init Player Data     //
+		// ~~~~~~~~~~~~~~~~~~~~~~~~ */		
+		
+			//TEMPORARY TOKENS AS JLABELS
+		playerTokens = new JLabel [numPlayers];
+		playerList = new Player[numPlayers];
+		for (int i = 0; i < numPlayers; i++){
+			playerList[i] = new Player(("[" + (i+1) + "]"));
+			playerTokens[i] = new JLabel (playerList[i].getName());
+			sidePanel.add(playerList[i].getPlayerPanel());
+		}
+		
+		JButton rollButton = new JButton("ROLL!");
+		sidePanel.add(rollButton);
+		rollButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				prevPanel = playerList[currPlayer].getPosition();
+				if (playerList[currPlayer].takeTurn() == 0){
+					System.out.println(playerList[currPlayer].getStatus());
+					newPanel = playerList[currPlayer].getPosition();
+					repositionPlayer();
+					currPlayer = (currPlayer+1) % numPlayers;
+				}
+			}
+		});
+
+		
+
+		/* ~~~~~~~~~~~~~~~~~~~~~~~ //
+		//     Init Board Data     //
+		// ~~~~~~~~~~~~~~~~~~~~~~~ */
+		
 		boardPieces = new ArrayList < BoardPiece > (40);
 		
 			// SOUTH BORDER 0-10
@@ -92,6 +145,7 @@ public class GameBoard extends JPanel{
 		boardPieces.add(new Housing("Park Place", 350.00, Color.BLUE));
 		boardPieces.add(new Event("Luxury Tax"));		
 		boardPieces.add(new Housing("Boardwalk", 400.00, Color.BLUE));
+		
 	}
 
 	
@@ -99,8 +153,12 @@ public class GameBoard extends JPanel{
 	private void loadBoardPiecesUI(){
 			// Drawing Panels
 		boardPiecePanels =  new ArrayList < JPanel > (40);
+		boardPiecePanelCenters = new JPanel [40];
+		
 		for (int i = 0; i < boardPieces.size(); i++){
 			JPanel p = new JPanel (new BorderLayout());
+			boardPiecePanelCenters[i] = new JPanel();
+			boardPiecePanelCenters[i].setBackground(Color.WHITE);
 			JLabel nameLabel = new JLabel("" + boardPieces.get(i).getHtmlName());
 			Color textColor;
 
@@ -129,6 +187,7 @@ public class GameBoard extends JPanel{
 			}
 			
 			p.add(nameLabel, BorderLayout.NORTH);
+			p.add(boardPiecePanelCenters[i], BorderLayout.CENTER);
 			p.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			p.setBackground(Color.WHITE);
 			boardPiecePanels.add(i, p);
@@ -193,181 +252,96 @@ public class GameBoard extends JPanel{
 			}
 		}
 		
-		add(northPanel, BorderLayout.NORTH);
-		add(eastPanel, BorderLayout.EAST);
-		add(southPanel, BorderLayout.SOUTH);
-		add(westPanel, BorderLayout.WEST);
+			// Place playerTokens
+		for(int i = 0; i < numPlayers; i++){
+			boardPiecePanelCenters[0].add(playerTokens[i]);
+		}
+		
+		mainPanel.add(northPanel, BorderLayout.NORTH);
+		mainPanel.add(eastPanel, BorderLayout.EAST);
+		mainPanel.add(southPanel, BorderLayout.SOUTH);
+		mainPanel.add(westPanel, BorderLayout.WEST);
+		
+		add(mainPanel);
+		add(sidePanel);
 	}
 	
 	
 		// Override paintComponent to draw
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
 
-		double subLength, subWidth;
-		Dimension panelSize = getSize();
-		subLength = (panelSize.getHeight() / 13);
-		subWidth = (panelSize.getWidth() /13);
+		// double subLength, subWidth;
+		// Dimension panelSize = getSize();
+		// subLength = (panelSize.getHeight() / 13);
+		// subWidth = (panelSize.getWidth() /13);
 		
 		
-		Dimension horiSize = new Dimension((int) subWidth, (int) subLength*2);
-		Dimension vertSize = new Dimension((int) subWidth*2, (int) subLength);
-		Dimension cornerSize = new Dimension((int) subWidth*2, (int) subLength*2);
+		// Dimension horiSize = new Dimension((int) subWidth, (int) subLength*2);
+		// Dimension vertSize = new Dimension((int) subWidth*2, (int) subLength);
+		// Dimension cornerSize = new Dimension((int) subWidth*2, (int) subLength*2);
 		
-		// // Dimension horiSize = new Dimension(90, 120);
-		// Dimension vertSize = new Dimension(120, 60);
-		// Dimension cornerSize = new Dimension(120, 120);
-		// System.out.println("Width: " + horiSize.getWidth() + ", Height: " + horiSize.getHeight());
-		// System.out.println("subWidth: " + subWidth + ", subheight: " + subLength + "\n");
+		// Dimension horiSize = new Dimension(90, 120);
+		// // Dimension vertSize = new Dimension(120, 60);
+		// // Dimension cornerSize = new Dimension(120, 120);
+		// // System.out.println("Width: " + horiSize.getWidth() + ", Height: " + horiSize.getHeight());
+		// // System.out.println("subWidth: " + subWidth + ", subheight: " + subLength + "\n");
 				
-		for (int i = 0; i < boardPiecePanels.size(); i++){
-				// SOUTH
-			if(i <= 10){
-				boardPiecePanels.get(i).setPreferredSize(horiSize);
-				boardPiecePanels.get(i).setMinimumSize(horiSize);
-				boardPiecePanels.get(i).setMaximumSize(horiSize);
-				if(i == 0 | i == 10){
-					boardPiecePanels.get(i).setPreferredSize(cornerSize);
-					boardPiecePanels.get(i).setMinimumSize(cornerSize);
-					boardPiecePanels.get(i).setMaximumSize(cornerSize);
-				}
-			}
-				// WEST
-			else if(i >= 11 && i <= 19){
-				boardPiecePanels.get(i).setPreferredSize(vertSize);
-				boardPiecePanels.get(i).setMinimumSize(vertSize);
-				boardPiecePanels.get(i).setMaximumSize(vertSize);
-			}
-				// NORTH
-			else if(i >=20 && i <= 30){
-				boardPiecePanels.get(i).setPreferredSize(horiSize);
-				boardPiecePanels.get(i).setMinimumSize(horiSize);
-				boardPiecePanels.get(i).setMaximumSize(horiSize);
-				if(i == 20 | i == 30){
-					boardPiecePanels.get(i).setPreferredSize(cornerSize);
-					boardPiecePanels.get(i).setMinimumSize(cornerSize);
-					boardPiecePanels.get(i).setMaximumSize(cornerSize);
-				}
-			}
-				// EAST
-			else if(i >= 31 && i <= 39){
-				boardPiecePanels.get(i).setPreferredSize(vertSize);
-				boardPiecePanels.get(i).setMinimumSize(vertSize);
-				boardPiecePanels.get(i).setMaximumSize(vertSize);
-			}
-			else{
-				System.err.println("boardPiecesPanels Index bound exceeded!");
-			}
-		}
+		// for (int i = 0; i < boardPiecePanels.size(); i++){
+				// // SOUTH
+			// if(i <= 10){
+				// boardPiecePanels.get(i).setPreferredSize(horiSize);
+				// boardPiecePanels.get(i).setMinimumSize(horiSize);
+				// boardPiecePanels.get(i).setMaximumSize(horiSize);
+				// if(i == 0 | i == 10){
+					// boardPiecePanels.get(i).setPreferredSize(cornerSize);
+					// boardPiecePanels.get(i).setMinimumSize(cornerSize);
+					// boardPiecePanels.get(i).setMaximumSize(cornerSize);
+				// }
+			// }
+				// // WEST
+			// else if(i >= 11 && i <= 19){
+				// boardPiecePanels.get(i).setPreferredSize(vertSize);
+				// boardPiecePanels.get(i).setMinimumSize(vertSize);
+				// boardPiecePanels.get(i).setMaximumSize(vertSize);
+			// }
+				// // NORTH
+			// else if(i >=20 && i <= 30){
+				// boardPiecePanels.get(i).setPreferredSize(horiSize);
+				// boardPiecePanels.get(i).setMinimumSize(horiSize);
+				// boardPiecePanels.get(i).setMaximumSize(horiSize);
+				// if(i == 20 | i == 30){
+					// boardPiecePanels.get(i).setPreferredSize(cornerSize);
+					// boardPiecePanels.get(i).setMinimumSize(cornerSize);
+					// boardPiecePanels.get(i).setMaximumSize(cornerSize);
+				// }
+			// }
+				// // EAST
+			// else if(i >= 31 && i <= 39){
+				// boardPiecePanels.get(i).setPreferredSize(vertSize);
+				// boardPiecePanels.get(i).setMinimumSize(vertSize);
+				// boardPiecePanels.get(i).setMaximumSize(vertSize);
+			// }
+			// else{
+				// System.err.println("boardPiecesPanels Index bound exceeded!");
+			// }
+		// }		
+	}
+	
+	private void repositionPlayer(){
+		boardPiecePanelCenters[prevPanel].remove(playerTokens[currPlayer]);
+		boardPiecePanelCenters[newPanel].add(playerTokens[currPlayer]);
+		repaint();
+	}
+	
+	// public static void main (String args []){
+		// // GameBoard gb = new GameBoard();
 		
-	}
-	
-	
-	public static void main (String args []){
-		// GameBoard gb = new GameBoard();
-		
-		// for (BoardPiece b : gb.boardPieces){
-			// System.out.println(gb.boardPieces.getName());
-		// }
-	}
+		// // for (BoardPiece b : gb.boardPieces){
+			// // System.out.println(gb.boardPieces.getName());
+		// // }
+	// }
 }
 
 
 
-abstract class BoardPiece extends JPanel{
-	private String name;
-	private String htmlName;
-	protected Color color = Color.WHITE;
-	
-	BoardPiece(String n){
-		name = n;
-		htmlName = "<html><p style='text-align:center;'>" + n + "<br/>&nbsp; </p></html>";
-	}
-	BoardPiece(String n, String htmlN){
-		name = n;
-		htmlName = htmlN;
-	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public String getHtmlName(){
-		return htmlName;
-	}
-	
-	public Color getColor(){
-		return color;
-	}
-	
-	@Override
-	public String toString(){
-		return name;
-	}
-}
-
-abstract class Property extends BoardPiece{
-	private double price;
-	
-	Property (String n, double p){
-		super(n);
-		price = p;
-	}
-	
-	Property (String n, String htmlN, double p){
-		super(n, htmlN);
-		price = p;
-	}
-	
-	public double getPrice(){
-		return price;
-	}
-}
-
-class Housing extends Property{
-	private double price;
-	
-	Housing(String n, double p, Color c){
-		super(n, p);
-		color = c;
-	}
-
-	Housing(String n, String htmlN, double p, Color c){
-		super(n, htmlN, p);
-		color = c;
-	}
-}
-
-class RailRoad extends Property{
-
-	RailRoad (String n, double p){
-		super (n, p);
-	}
-	
-	RailRoad (String n, String htmlN, double p){
-		super (n, htmlN, p);
-	}
-}
-
-class Utilities extends Property{
-
-	Utilities (String n, double p){
-		super(n, p);
-	}
-	
-	Utilities (String n, String htmlN, double p){
-		super(n, htmlN, p);
-	}
-}
-
-class Event extends BoardPiece{
-
-	Event (String n){
-		super (n);
-	}
-	
-	Event (String n, String htmlN){
-		super (n, htmlN);
-	}
-}

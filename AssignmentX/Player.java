@@ -3,40 +3,50 @@ import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
 
-class Player {
+/*	~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	::   Class Description   ::
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	  PlayerPanel is Nested.
+	Player has one PlayerPanel.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+class Player{
+	private String name;
 	private double balance;
 	private int position;
 	private Random rando;
+	private PlayerPanel pPanel;
 	
+	
+	////////////////////////////////////////////////////
+	// ***************  Constructors  *************** //
+	////////////////////////////////////////////////////
+
 	public Player(){
+		name = "Player";
 		balance = 1500.00;
 		position = 0;
-		// rando = new Random(System.currentTimeMillis());
+		pPanel = new PlayerPanel ();
 		rando = new Random();
 	}
 	
-		// Returns Status
-	public String takeTurn(){
-		moveSpaces(rollDice());
-		return getStatus();
+	public Player(String n){
+		name = n;
+		balance = 1500.00;
+		position = 0;
+		pPanel = new PlayerPanel ();
+		rando = new Random();
 	}
+		
+		
+	//////////////////////////////////////////////////////
+	// *************  Accessor Functions  ************* //
+	//////////////////////////////////////////////////////
 	
-	boolean withdraw (double amount){
-		if (amount < balance){
-			balance -= amount;
-			return true;
-		}
-		else{
-			System.out.println("Throw exception buddy: Not enough money!");
-			return false;
-		}
+	public String getName(){
+		return name;
 	}
-	boolean deposit (double amount){
-		balance += amount;
-		return true;
-	}
-	// Roll Dice
-	// Action based upon Landing Property... Figure out where this can go.
 	
 	public double getBalance(){
 		return balance;
@@ -46,14 +56,31 @@ class Player {
 		return position;
 	}
 	
-	public int moveSpaces(int spaces){
-		position += spaces;
-		if (position  > 39){
-			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$\nPassed Go, Collect $200\n$$$$$$$$$$$$$$$$$$$$$$$");
-			deposit(200.00);
+	public PlayerPanel getPlayerPanel(){
+		return pPanel;
+	}
+	
+	
+	//////////////////////////////////////////////////////
+	// **************  Mutator Functions  ************* //
+	//////////////////////////////////////////////////////
+	
+	public boolean withdraw (double amount){
+		if (amount < balance){
+			balance -= amount;
+			pPanel.repaint();
+			return true;
 		}
-
-		return position %= 40;
+		else{
+			System.out.println("Throw exception buddy: Not enough money!");
+			return false;
+		}
+	}
+	
+	public boolean deposit (double amount){
+		balance += amount;
+		pPanel.repaint();
+		return true;
 	}
 	
 		// Set position. Return new position or -1 if bad input.
@@ -66,7 +93,30 @@ class Player {
 			return -1;
 		}
 	}
+
+	//////////////////////////////////////////////////////
+	// ***************  Other Functions  ************** //
+	//////////////////////////////////////////////////////
+
 	
+		// Returns 0 Implement to return 0, 1, 2, 3 for Jail
+	public int takeTurn(){
+		moveSpaces(rollDice());
+		return 0;
+	}
+	
+		// Returns new position
+	public int moveSpaces(int spaces){
+		int pos = position + spaces;
+		if (pos > 39){
+			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$\nPassed Go, Collect $200\n$$$$$$$$$$$$$$$$$$$$$$$");
+			deposit(200.00);
+		}
+		pos %= 40;
+		return setPosition(pos);
+	}
+	
+		// Rolls 2 dice. returns Sum
 	public int rollDice (){
 		int roll1,roll2;
 		roll1 = (rando.nextInt() % 6 + 6) % 6 + 1;
@@ -77,12 +127,18 @@ class Player {
 			System.out.println("###################\n     DOUBLES!\n###################");
 		}
 		return roll1 + roll2;
-	}
+	}	
 	
+		// Returns "Pos: <position>, $<balance>"
 	public String getStatus(){
 		String status = "Pos: " + getPosition() + ", $" + getBalance();
 		return status;
 	}
+
+
+
+
+
 	
 	// public static void main (String args[]){
 		// Player p1;
@@ -101,33 +157,36 @@ class Player {
 		// }
 		
 	// }
-}
 
-
-class PlayersPanel extends JPanel{
 	
-	// private JPanel[] panels;
-	private JLabel nameLabel;
-	private JLabel balanceLabel;
-	private Player[] players;
-	private JPanel[] panels;
+	//////////////////////////////////////////////////////
+	// *****************  Nested Class **************** //
+	//////////////////////////////////////////////////////
 	
-	public PlayersPanel(Player[] p){
-		setLayout(new GridLayout(0, 1));
-		players = p;
+	class PlayerPanel extends JPanel{
+		
+		private JLabel nameLabel;
+		private JLabel balanceLabel;
+		
+		public PlayerPanel(){
+		
+			setLayout(new BorderLayout());
 
-		panels = new JPanel [players.length];
-		for(int i = 0; i < players.length; i++){
-			panels[i] = new JPanel(new BorderLayout());
-			nameLabel = new JLabel ("Player " + (i+1));
-			balanceLabel = new JLabel ("$" + players[i].getBalance());
+			nameLabel = new JLabel (name);
+			balanceLabel = new JLabel ("$" + balance);
 
-			panels[i].add(nameLabel, BorderLayout.NORTH);
-			panels[i].add(balanceLabel, BorderLayout.CENTER);
-			panels[i].setBackground(Color.WHITE);
-
-			add(panels[i]);
-		}		
-		// System.out.println(players.length);
+			add(nameLabel, BorderLayout.NORTH);
+			add(balanceLabel, BorderLayout.CENTER);
+		}
+		
+		public void paintComponent(Graphics g){
+			super.paintComponent(g);
+			
+			setBackground(Color.WHITE);
+			balanceLabel.setText("$" + balance);
+		}
 	}
+	
 }
+
+
