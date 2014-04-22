@@ -13,7 +13,7 @@ import java.awt.*;
 
 class Player{
 	private String name;
-	private double balance;
+	private int balance;
 	private int position;
 	private Random rando;
 	private PlayerPanel pPanel;
@@ -24,16 +24,12 @@ class Player{
 	////////////////////////////////////////////////////
 
 	public Player(){
-		name = "Player";
-		balance = 1500.00;
-		position = 0;
-		pPanel = new PlayerPanel ();
-		rando = new Random();
+		this("Player");
 	}
 	
 	public Player(String n){
 		name = n;
-		balance = 1500.00;
+		balance = 1500;
 		position = 0;
 		pPanel = new PlayerPanel ();
 		rando = new Random();
@@ -48,7 +44,7 @@ class Player{
 		return name;
 	}
 	
-	public double getBalance(){
+	public int getBalance(){
 		return balance;
 	}
 	
@@ -65,7 +61,7 @@ class Player{
 	// **************  Mutator Functions  ************* //
 	//////////////////////////////////////////////////////
 	
-	public boolean withdraw (double amount){
+	public boolean withdraw (int amount){
 		if (amount < balance){
 			balance -= amount;
 			pPanel.repaint();
@@ -77,7 +73,7 @@ class Player{
 		}
 	}
 	
-	public boolean deposit (double amount){
+	public boolean deposit (int amount){
 		balance += amount;
 		pPanel.repaint();
 		return true;
@@ -93,11 +89,11 @@ class Player{
 			return -1;
 		}
 	}
+	
 
 	//////////////////////////////////////////////////////
 	// ***************  Other Functions  ************** //
 	//////////////////////////////////////////////////////
-
 	
 		// Returns 0 Implement to return 0, 1, 2, 3 for Jail
 	public int takeTurn(){
@@ -110,7 +106,7 @@ class Player{
 		int pos = position + spaces;
 		if (pos > 39){
 			System.out.println("$$$$$$$$$$$$$$$$$$$$$$$\nPassed Go, Collect $200\n$$$$$$$$$$$$$$$$$$$$$$$");
-			deposit(200.00);
+			deposit(200);
 		}
 		pos %= 40;
 		return setPosition(pos);
@@ -134,30 +130,7 @@ class Player{
 		String status = "Pos: " + getPosition() + ", $" + getBalance();
 		return status;
 	}
-
-
-
-
-
 	
-	// public static void main (String args[]){
-		// Player p1;
-		// Player p2;
-		// p1 = new Player();
-		// p2 = new Player();
-		
-		// int roll;
-		
-		// for(int i = 0; i < 5; i++){
-			// System.out.println("p1 balance: " + p1.getBalance());
-			// System.out.println("p1 position: " + p1.getPosition());
-			// System.out.print("p1 rolled: ");
-			// roll = p1.rollDice();
-			// System.out.println("p1 moving to space: " + p1.moveSpaces(roll) + "\n");
-		// }
-		
-	// }
-
 	
 	//////////////////////////////////////////////////////
 	// *****************  Nested Class **************** //
@@ -172,7 +145,7 @@ class Player{
 		
 			setLayout(new BorderLayout());
 
-			nameLabel = new JLabel (name);
+			nameLabel = new JLabel ("Player " + name);
 			balanceLabel = new JLabel ("$" + balance);
 
 			add(nameLabel, BorderLayout.NORTH);

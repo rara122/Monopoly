@@ -8,14 +8,14 @@ Also start working on Money System.
 
 
 Comments:
-Made UI update playerTokens as they roll and balances as well.
-Redesigned so that Monopoly's hierarchy of composition is better suited with the code.
-	- Monopoly has 1 GameBoard.
-	- GameBoard has at least 2 Player(s).
-	- Player have a 1 to 1 mapping to a PlayerPanel.
-	- BoardPiece.java has it's own .java file now rather than complicating GameBoard.java.
-Commented the code for clarification and readability.
-Changed some of the function calls and return values to better correspond to what it ACTUALLY needs to do.
-Added private boardPiecePanelCenters[] so I can access Centers of boardPiecePanels.
-Added JLabel playerTokens added into boardPiecePanelCenters[].
-	
+	Updated BoardPiece.java 
+		- Overrode paintComponent() in BoardPiece along with all of it's derived classes.
+		- Updated Constructors so I only need to define ONE constructor.
+	Updated Monopoly.java
+		- Changed Sizes of the frame
+	Updated GameBoard.java
+		- Updated repositionPlayer()
+		- Changed repaint() to validate() in repositionPlayer()
+	Updated Player.java
+		- pPanel now has a centerPanel(new GridLayout(1, 8))
+	Changed all prices from doubles to integers to better fit Monopoly's economics.

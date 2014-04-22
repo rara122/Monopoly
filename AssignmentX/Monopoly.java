@@ -25,52 +25,12 @@ public class Monopoly {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(gb);
 		frame.pack();
-		frame.setSize(1266, 842);
+		frame.setSize(1280, 822);
 		frame.setVisible(true);
 	}
 	
-	
-	//////////////////////////////////////////////////////
-	// *************  Accessor Functions  ************* //
-	//////////////////////////////////////////////////////
-		
-	// public Player[] getPlayers (){
-		// return players;
-	// }
-	// public JPanel getMonopolyBoard(){
-		// return monopolyBoard;
-	// }
-	
-	
-	//////////////////////////////////////////////////////
-	// ***************  Other Functions  ************** //
-	//////////////////////////////////////////////////////
-	
-		//Takes Turn & positions Player. Returns next player
-	// public int takeTurn(){
-		// int status;
-		// System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~\nPlayer "+ (currPlayer+1));
-		// status = players[currPlayer].takeTurn();
-		// positionPlayer(currPlayer);
-		// System.out.println("$" + players[currPlayer].getBalance() + "\n");
-		
-		// return (currPlayer + 1) % numPlayers;
-	// }
-	
-	// private void positionPlayer(int currPlayer){
-		// System.out.println("Placed to " + players[currPlayer].getPosition());
-		// gb
-	// }
-
-	
-	
-	
-	
-	
-	
-	
 	public static void main (String [] args){
-		Monopoly m1 = new Monopoly(4);
+		Monopoly m1 = new Monopoly(8);
 		
 	}
 }
